@@ -965,6 +965,7 @@ function checkIfTrue() {
         correctlyAnswered--;
     }
     dataLS(correctlyAnswered);
+    if (timerStarted) restartTimer();
     init();
 }
 
@@ -975,6 +976,35 @@ function checkIfFalse() {
         correctlyAnswered--;
     }
     dataLS(correctlyAnswered);
+    if (timerStarted) restartTimer();
+    init();
+}
+
+let secondsBeforeSkipping;
+let timerStarted = false;
+let timer;
+function toggleTimer() {
+    timerStarted = !timerStarted;
+    if (timerStarted) {
+        secondsBeforeSkipping = document.getElementById('secondsTimer').value;
+        timer = initTimer();
+    } else {
+        clearInterval(timer);
+    }
+}
+
+function initTimer() {
+    return setInterval(() => {
+        skip();
+    }, secondsBeforeSkipping * 1000);
+}
+
+function restartTimer() {
+    clearInterval(timer);
+    timer = initTimer();
+}
+
+function skip() {
     init();
 }
 
